@@ -25,6 +25,7 @@ const Header = () => {
                   data.user?.image ?? "../../../../public/default_avatar.jpg"
                 }
                 alt="User image"
+                className="h-10 w-10"
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>

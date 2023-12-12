@@ -13,7 +13,6 @@ const Header = () => {
     signIn();
   };
 
-  console.log(data?.user?.email);
   return (
     <div>
       <div className="text-xl leading-heading font-semibold w-full bg-tuna-950 shadow-sm  p-2 flex justify-between items-center">

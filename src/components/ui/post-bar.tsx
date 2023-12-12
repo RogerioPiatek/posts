@@ -14,26 +14,26 @@ import {
 import { Textarea } from "./textarea";
 import SubmitButton from "./submit-button";
 import { useSession } from "next-auth/react";
-import prisma from "@/lib/prisma";
 import { Button } from "./button";
+
+import { createPost } from "@/actions/createPost";
 
 const PostBar = () => {
   const [postContent, setPostContent] = useState("");
 
-  const { data: userEmail } = useSession();
+  const { data } = useSession();
+  const email = data?.user?.email;
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setPostContent(event.target.value);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const body = { userEmail, postContent };
-    await fetch("/api/saveText", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+  const handleSubmit = async () => {
+    if (!email) {
+      return "Couldn't submit post.";
+    } else {
+      await createPost({ email, postContent });
+    }
   };
 
   return (

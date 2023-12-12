@@ -12,27 +12,30 @@ import {
   DialogTrigger,
 } from "./dialog";
 import { Textarea } from "./textarea";
-import SubmitButton from "./submit-button";
 import { useSession } from "next-auth/react";
 import { Button } from "./button";
 
 import { createPost } from "@/actions/createPost";
+import { useRouter } from "next/navigation";
 
 const PostBar = () => {
   const [postContent, setPostContent] = useState("");
+  const router = useRouter();
 
   const { data } = useSession();
   const email = data?.user?.email;
+  const name = data?.user?.name;
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setPostContent(event.target.value);
   };
 
   const handleSubmit = async () => {
-    if (!email) {
+    if (!email || !name) {
       return "Couldn't submit post.";
     } else {
-      await createPost({ email, postContent });
+      await createPost({ email, postContent, name });
+      router.refresh();
     }
   };
 
@@ -58,7 +61,12 @@ const PostBar = () => {
           maxLength={140}
         />
         <DialogFooter>
-          <Button onClick={handleSubmit}>Publicate Post</Button>
+          <Button
+            onClick={handleSubmit}
+            className="bg-tuna-700 text-tuna-100 w-fit self-end mx-2 my-1 leading-base font-semibold"
+          >
+            Publicate post
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

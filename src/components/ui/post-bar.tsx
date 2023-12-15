@@ -45,7 +45,7 @@ const PostBar = () => {
   };
 
   return (
-    <Dialog open={open}>
+    <Dialog defaultOpen={false}>
       <DialogTrigger asChild>
         <div
           onClick={() => {
@@ -60,7 +60,6 @@ const PostBar = () => {
         <DialogHeader className="font-semibold leading-heading self-start text-xl">
           Write your post!
         </DialogHeader>
-        {/* TEXT AREA HERE */}
         <Textarea
           className="bg-tuna-700 text-tuna-400 border-tuna-700"
           placeholder="Share your ideas!"
@@ -68,12 +67,12 @@ const PostBar = () => {
           maxLength={140}
         />
         <DialogFooter>
-          <Button
+          <DialogClose
             onClick={handleSubmit}
-            className="bg-tuna-700 text-tuna-100 w-fit self-end mx-2 my-1 leading-base font-semibold"
+            className="bg-tuna-700 text-tuna-100 w-fit self-end mx-2 my-1 leading-base font-semibold px-3 py-2 rounded text-base"
           >
             Publicate post
-          </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

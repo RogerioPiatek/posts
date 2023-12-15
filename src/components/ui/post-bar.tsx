@@ -6,6 +6,7 @@ import { ChangeEvent, useState } from "react";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
@@ -20,30 +21,36 @@ import { useRouter } from "next/navigation";
 
 const PostBar = () => {
   const [postContent, setPostContent] = useState("");
+  const [open, setOpen] = useState(false);
+
   const router = useRouter();
 
   const { data } = useSession();
   const email = data?.user?.email;
   const name = data?.user?.name;
+  const image = data?.user?.image;
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setPostContent(event.target.value);
   };
 
   const handleSubmit = async () => {
-    if (!email || !name) {
+    if (!email || !name || !image) {
       return "Couldn't submit post.";
     } else {
-      await createPost({ email, postContent, name });
+      await createPost({ email, postContent, name, image });
+      setOpen(false);
       router.refresh();
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={open}>
       <DialogTrigger asChild>
         <div
-          onClick={() => {}}
+          onClick={() => {
+            setOpen(true);
+          }}
           className="bg-tuna-800 text-tuna-500 w-full rounded-full"
         >
           <div className="px-3 py-2 text-sm">What are you thinking about?</div>

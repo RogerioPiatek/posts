@@ -3,7 +3,11 @@ import PostBar from "@/components/ui/post-bar";
 import prisma from "@/lib/prisma";
 
 export default async function Home() {
-  const posts = await prisma.post.findMany();
+  const posts = await prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return (
     <main className="flex flex-col gap-6 h-full mx-3">

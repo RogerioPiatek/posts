@@ -58,6 +58,7 @@ model Post {
   author    User     @relation(fields: [authorId], references: [email])
   name      String
   authorId  String
+  image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String

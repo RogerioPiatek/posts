@@ -2,6 +2,8 @@ import Post from "@/components/ui/post";
 import PostBar from "@/components/ui/post-bar";
 import prisma from "@/lib/prisma";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const posts = await prisma.post.findMany({
     orderBy: {

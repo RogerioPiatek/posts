@@ -9,6 +9,11 @@ export default async function Home() {
     orderBy: {
       createdAt: "desc",
     },
+    include: {
+      _count: {
+        select: { Like: true },
+      },
+    },
   });
 
   return (
@@ -17,7 +22,9 @@ export default async function Home() {
         <PostBar />
       </div>
       {posts.map((post) => {
-        return <Post key={post.id} postData={post} />;
+        return (
+          <Post key={post.id} postData={post} likeCount={post._count.Like} />
+        );
       })}
     </main>
   );

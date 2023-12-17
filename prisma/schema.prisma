@@ -43,6 +43,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Post          Post[]
+  Like          Like[]
 }
 
 model VerificationToken {
@@ -62,4 +63,14 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   content   String
+  Like      Like[]
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  postId    Int
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [email])
+  Post      Post     @relation(fields: [postId], references: [id])
 }
